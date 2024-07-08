@@ -7,9 +7,14 @@ add_button = sg.Button("Agregar")
 list_box = sg.Listbox(values=functions.get_tasks(), key="tareas",
                       enable_events=True, size=[45, 10])
 edit_button = sg.Button("Editar")
+complete_button = sg.Button("Completada")
+exit_button = sg.Button("Salir")
 
 window = sg.Window('Mi aplicación de tareas por hacer',
-                   layout=[[label], [input_box, add_button], [list_box, edit_button]],
+                   layout=[[label], 
+                           [input_box, add_button], 
+                           [list_box, edit_button, complete_button],
+                           [exit_button]],
                    font=('Helvetica', 20))
 
 while True:
@@ -34,10 +39,18 @@ while True:
             tasks[index] = new_task
             functions.write_tasks(tasks)
             window["tareas"].update(values=tasks)
+        case "Completada":
+            task_completed = values["tareas"][0]
             
+            tasks = functions.get_tasks()
+            tasks.remove(task_completed)
+            functions.write_tasks(tasks)
+            window["tareas"].update(values=tasks)
+            window["tarea"].update(value="")
+        case "Salir":
+            break
         case "tareas":
             window["tarea"].update(value=values["tareas"][0])
-            
         case sg.WIN_CLOSED:
             break
             
