@@ -1,7 +1,12 @@
 import functions
-import FreeSimpleGUI as sg
+import PySimpleGUI as sg
 import time
+import os
 
+if not os.path.exists("todos.txt"):
+    with open("todos.txt", 'w') as file:
+        pass
+    
 sg.theme("DarkBrown6")
 
 clock = sg.Text("", key="clock")
