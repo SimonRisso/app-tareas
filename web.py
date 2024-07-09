@@ -13,9 +13,13 @@ st.title("My todo App")
 st.subheader("Esta es mi aplicación de cosas por hacer")
 st.write("Está diseñada para aumentar tu productividad")
 
-for task in tasks:
-    st.checkbox(task)
+for index, task in enumerate(tasks):
+    checkbox = st.checkbox(task, key=task)
+    if checkbox:
+        print(checkbox)
+        tasks.pop(index)
+        functions.write_tasks(tasks)
+        del st.session_state[task]
+        st.rerun()
     
 st.text_input(label="", placeholder="Agregue una tarea...", on_change=add_task, key="new_task")
-
-st.session_state
